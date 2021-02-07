@@ -9,8 +9,10 @@ export default class Converter extends React.Component {
       result: 0,
       inputDevises: "EUR",
       outputDevises: "USD",
-      montant: null,
-      res: 0,
+      oldinputDevises: null,
+      oldoutputDevises: null,
+      montant: 0,
+      taux: null,
       loading: false,
       class: null
     };
@@ -22,6 +24,13 @@ export default class Converter extends React.Component {
     if (this.state.inputDevises === this.state.outputDevises) {
       this.setState({
         result: this.state.montant
+      });
+    } else if (
+      this.state.inputDevises === this.state.oldinputDevises &&
+      this.state.outputDevises === this.state.oldoutputDevises
+    ) {
+      this.setState({
+        result: this.state.montant * this.state.taux
       });
     } else if (this.state.montant === 0) {
       this.setState({
@@ -51,7 +60,10 @@ export default class Converter extends React.Component {
               this.setState({
                 loading: false,
                 result:
-                  this.state.montant * result.rates[this.state.outputDevises]
+                  this.state.montant * result.rates[this.state.outputDevises],
+                taux: result.rates[this.state.outputDevises],
+                oldinputDevises: this.state.inputDevises,
+                oldoutputDevises: this.state.outputDevises
               });
             });
         }, 500);
