@@ -25,13 +25,6 @@ export default class Converter extends React.Component {
       this.setState({
         result: this.state.montant
       });
-    } else if (
-      this.state.inputDevises === this.state.oldinputDevises &&
-      this.state.outputDevises === this.state.oldoutputDevises
-    ) {
-      this.setState({
-        result: this.state.montant * this.state.taux
-      });
     } else if (this.state.montant === 0) {
       this.setState({
         result: 0
@@ -45,6 +38,13 @@ export default class Converter extends React.Component {
       this.setState({
         class: "invalid",
         result: 0
+      });
+    } else if (
+      this.state.inputDevises === this.state.oldinputDevises &&
+      this.state.outputDevises === this.state.oldoutputDevises
+    ) {
+      this.setState({
+        result: this.state.montant * this.state.taux
       });
     } else {
       this.setState({ loading: true, class: "valid" }, () => {
