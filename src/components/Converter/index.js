@@ -21,12 +21,9 @@ export default class Converter extends React.Component {
 
   async deviseChanged(event) {
     await this.setState({ [event.target.name]: event.target.value });
-    if (this.state.inputDevises === this.state.outputDevises) {
+    if (parseInt(this.state.montant, 10) === 0) {
       this.setState({
-        result: this.state.montant
-      });
-    } else if (this.state.montant === 0) {
-      this.setState({
+        class: "valid",
         result: 0
       });
     } else if (isNaN(this.state.montant)) {
@@ -39,11 +36,17 @@ export default class Converter extends React.Component {
         class: "invalid",
         result: 0
       });
+    } else if (this.state.inputDevises === this.state.outputDevises) {
+      this.setState({
+        class: "valid",
+        result: this.state.montant
+      });
     } else if (
       this.state.inputDevises === this.state.oldinputDevises &&
       this.state.outputDevises === this.state.oldoutputDevises
     ) {
       this.setState({
+        class: "valid",
         result: this.state.montant * this.state.taux
       });
     } else {
